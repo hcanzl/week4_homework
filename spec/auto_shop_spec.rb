@@ -28,7 +28,7 @@ describe 'AutoShop' do
       expect{ subject.append_employees(nil) }.to raise_error(ArgumentError)
     end
         
-    it '#append_employees accepts an array of employees' do
+    it '#append_employees accepts an array of employees & increases the number of employees by the size of the array' do
       input = [
                 Employee.new('Chu', 'Mechanic',     150_000),
                 Employee.new('Lou', 'Receptionist', 90_000)
@@ -39,20 +39,22 @@ describe 'AutoShop' do
       }.should change(subject.employees, :count).by(2)
     end
     
-    # TODO: Figure out why this is not working
-    #it '#append_employees accepts an array of employees & append to autoshop employee array' do
-    #  input = [
-    #          Employee.new('Chu', 'Mechanic',     150_000),
-    #          Employee.new('Lou', 'Receptionist', 90_000)
-    #        ]
-    #  subject.append_employees input
-    #  subject.employees.should include(Employee.new('Chu', 'Mechanic',     150_000))
-    #end
+    it '#append_employees accepts an array of employees & append the employees to autoshop employee array' do
+      employee1 = Employee.new('Chu', 'Mechanic',     150_000)
+      employee2 = Employee.new('Lou', 'Receptionist', 90_000)
+      input = [employee1, employee2]
+      
+      subject.append_employees input
+      
+      subject.employees.should include(employee1)
+    end
 
     it '#employee_list returns list of employee names' do
       # setup
       input = [Employee.new('Lou', 'Receptionist', 90_000)]
+      
       subject.append_employees input
+      
       subject.employee_list.should eq "Sue\nLou"
     end
   end

@@ -8,10 +8,6 @@ class AutoShop < Business
     super(name, tax_id)
   end
    
-  def employees
-    @employees
-  end
-   
   def append_employees employee_array
     raise ArgumentError, 'Argument is not an Array' unless employee_array.is_a? Array
     
@@ -19,11 +15,6 @@ class AutoShop < Business
   end
   
   def employee_list
-    employee_names = ""
-    @employees.each do |employee|
-      employee_names.concat(employee.name).concat("\n")
-    end
-    
-    employee_names.chomp
+    @employees.map { |employee| employee.name }.join("\n")
   end
 end
